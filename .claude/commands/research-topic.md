@@ -1,109 +1,82 @@
 # Skill: Research the Topic
 
-Do a thorough research pass on a campaign topic before writing any content.
-This ensures campaigns are grounded in real context — not generic copy.
+Do a thorough research pass on the campaign topic before writing any content.
+Produces a campaign brief grounded in real audience context, cultural timing,
+and Miraya's product range.
 
----
-
-## When to Use This Skill
-
-Run this before `/create-campaign` when you want the campaign to feel informed
-and specific rather than surface-level. Good research is what separates a
-post that gets saved from one that gets scrolled past.
-
----
-
-## Inputs Required
-
-- **Topic or keyword** (the campaign subject)
-- **Brand context** — read from CLAUDE.md
-- **Audience insights** (run `/fetch-audience-insights` first if not done recently)
-- **Trend context** (run `/fetch-trending-posts` and `/understand-trending` for richer output)
+Reads all variables from CLAUDE.md. Run after `/understand-trending`.
 
 ---
 
 ## Steps
 
-1. **Define the topic scope**
-   - What exactly is this campaign about? (product launch, sale, festival, awareness, UGC prompt?)
-   - What time window does it cover? (one post, a week-long series, a full seasonal push?)
+1. Read from CLAUDE.md:
+   - Products & Pricing Guide (which products fit this topic)
+   - Target Audience (what this audience feels about this topic)
+   - Festival Calendar (is there a seasonal hook?)
+   - Brand Voice & Tone
+   - Sales Process (DM / store visit CTAs only)
 
-2. **Research the cultural/seasonal context**
-   Search: `[topic] India [current month/season]`
-   Search: `[topic] significance Indian culture`
-   - Is there a festival, awareness day, or cultural moment attached?
-   - What are people in India feeling/thinking about this topic right now?
-   - Any regional significance? (specific states, cities, communities)
+2. Define the campaign scope:
+   - What exactly is this about? (product launch, festival, everyday wear, awareness, UGC prompt)
+   - Is it a single post or a series?
 
-3. **Research the product angle**
-   Based on CLAUDE.md Products & Pricing Guide:
-   - Which product(s) are most relevant to this topic?
-   - What is the strongest benefit to highlight for this audience?
-   - Any current offer or promotion to weave in?
+3. Run `web_search` for cultural/seasonal context:
+   - `"[topic] West Bengal / Siliguri [current month year]"`
+   - `"[topic] Indian women fashion [current month year]"`
+   - `"[topic] ethnic wear significance India"`
 
-4. **Research the audience angle**
-   Based on CLAUDE.md Target Audience + most recent insights:
-   - What does this audience already believe or feel about this topic?
-   - What language and references will land with them (Bollywood, regional, etc.)?
-   - What objection might they have? (too expensive, seen this before, not for me)
+4. Run `web_search` for content angles:
+   - `"[topic] Instagram content ideas ethnic wear brand India"`
+   - `"[topic] unique campaign angle women fashion"`
 
-5. **Research content angles**
-   Search: `[topic] content ideas India small business`
-   Search: `[topic] Instagram caption ideas`
-   - What angles have NOT been done to death?
-   - What would genuinely surprise or delight this audience?
+5. Run `web_search` for supporting data:
+   - Any facts, quotes, or cultural references that make the post more credible
+   - Any relevant Hindi/Bengali/Urdu phrases or sayings that fit
+   - Any trending audio or format that works for this topic
 
-6. **Gather reference data**
-   - Any statistics or facts that make the post more credible or shareable?
-   - Any quotes, sayings (Hindi/Urdu/regional) that fit the theme?
-   - Any trending audio or format that fits this topic?
+6. Identify the best-fit Miraya product(s) from CLAUDE.md for this campaign.
+
+7. Identify the objection this audience might have — and how to pre-empt it in copy.
 
 ---
 
 ## Output Format
 
-### Topic Research Brief: [Topic]
+### Topic Research Brief: "[topic]"
 **Date:** [today's date]
-**Campaign window:** [e.g., Oct 10-15 / one-time post / ongoing]
+**Campaign type:** [single post / series / seasonal]
 
 #### Cultural & Seasonal Context
-[What's happening in India around this topic right now]
+[What's happening in India / West Bengal around this topic right now]
 
-#### Product Fit
-- **Best product(s) to feature:** [from CLAUDE.md]
-- **Key benefit to highlight:** [for this specific topic/moment]
-- **Offer to mention (if any):** [from CLAUDE.md current offers]
+#### Best-Fit Miraya Product(s)
+[From CLAUDE.md — which products to feature and why]
+
+#### Key Benefit to Highlight
+[The single most compelling reason this audience should care, in Miraya's voice]
 
 #### Audience Insight
 - **What this audience feels about this topic:**
-- **Language/references that will land:**
-- **Potential objection to address:**
+- **References that will land (Bollywood, Bengali culture, local):**
+- **Likely objection and how to address it:**
 
 #### Fresh Angles (Not Overdone)
-1. [unique angle idea]
-2. [unique angle idea]
-3. [unique angle idea]
+1.
+2.
+3.
 
-#### Supporting Data / References
-- [fact, stat, or cultural reference that adds credibility]
-- [Hinglish phrase or regional saying that fits]
+#### Supporting Data / Cultural References
+- [fact or stat]
+- [Hinglish / Bengali phrase that fits]
+- [cultural moment or reference]
 
 #### Recommended Content Format
-- [ ] Single image
-- [ ] Carousel (educational / how-to / listicle)
+- [ ] Single product image
+- [ ] Carousel (educational / styling guide / story)
 - [ ] Video / Reel concept
-- [ ] Text-heavy / quote post
+- [ ] Quote / text card
+- [ ] Before/After or Styled look
 
-#### Ready for Campaign Creation
-This brief is ready to pass to `/create-campaign`.
-
----
-
-## Notes for Customisation
-
-<!-- Add recurring topics your brand always covers so Claude pre-knows the context -->
-<!-- Example: "We always do a Navratri campaign — context: Gujarat garba season, our audience
-     celebrates in Ahmedabad and Surat, our hero product is the chaniya choli co-ord set" -->
-
-<!-- Example: "For sale campaigns, always research what competitors are pricing at
-     so our offer positioning is sharp" -->
+#### Ready for Campaign Creation ✓
+Pass this brief to `/create-campaign`.

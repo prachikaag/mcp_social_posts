@@ -1,85 +1,64 @@
 # Skill: Fetch Competitor Brand Insights
 
-Research what competitor brands in your niche are posting, what's getting
-engagement, and what content strategies they are using — so you can
-differentiate your campaigns or spot gaps to exploit.
+Research what Miraya's competitor brands are posting, what's getting
+engagement, and where the content gaps are.
 
----
-
-## Inputs Required
-
-Before running this skill, either provide or confirm:
-- **Competitor brand names or Instagram handles** (ask the user if not provided)
-- **Your product category / niche** (read from CLAUDE.md)
-
-If the user hasn't provided competitor handles, ask:
-> "Which competitor brands or Instagram handles should I research?
-> You can give me 2-3 names or @handles."
+All competitor handles are read from CLAUDE.md — do not ask the user for them.
 
 ---
 
 ## Steps
 
-1. **Identify competitors** — use the handles/names provided, or suggest
-   known competitors based on the brand niche in CLAUDE.md.
+1. Read from CLAUDE.md (Competitor Brands section):
+   - @alamode_slg
+   - @trendxmastani
+   - Any additional handles the user has added
 
-2. **Web search for each competitor:**
-   - Search: `site:instagram.com @[handle]` to find their profile
-   - Search: `[Brand Name] Instagram campaign [current month/season]`
-   - Search: `[Brand Name] Facebook posts engagement`
-   - Search: `[Brand Name] reviews OR "customer says" OR testimonials`
+2. Also read Inspiration Brands from CLAUDE.md for contrast/reference.
 
-3. **For each competitor, research:**
-   - What content formats they use (image, carousel, video, Reels)
-   - What tone/language they use (Hinglish, English, Hindi)
-   - What offers or hooks appear in their posts (discounts, urgency, emotion)
-   - What hashtags they use frequently
-   - Approximate engagement signals (likes, comments if visible)
-   - What products they are currently promoting
+3. For each competitor, run the following `web_search` calls:
+   - `"@[handle] Instagram posts ethnic wear [current month year]"`
+   - `"[handle without @] Siliguri fashion content strategy"`
+   - `"[handle] Instagram captions hashtags women ethnic"`
 
-4. **Identify gaps and opportunities** — what are competitors NOT doing that
-   your brand could own?
+4. For each competitor, synthesise:
+   - Content style and formats (carousel, Reels, static image, text)
+   - Language/tone (Hinglish, Bengali, English)
+   - Current campaign focus or offers
+   - Hooks they use (urgency, emotion, price, aspiration)
+   - Hashtag patterns
+   - What they do well
+   - What they miss — gaps Miraya can own
+
+5. Identify 3–5 concrete opportunities for Miraya based on the gaps found.
 
 ---
 
 ## Output Format
 
-### Competitor Insights Report
+### Competitor Insights — Miraya
 **Date:** [today's date]
-**Niche:** [from CLAUDE.md]
-**Competitors researched:** [list]
+**Competitors researched:** @alamode_slg, @trendxmastani
 
 ---
 
-#### [Competitor 1 Name] (@handle)
-- **Content style:** [e.g., lifestyle imagery, flat lays, Reels-heavy]
-- **Language/tone:** [e.g., English-forward, aspirational, premium feel]
-- **Current campaign focus:** [e.g., summer sale, new arrivals]
-- **Hooks they use:** [e.g., price drops, urgency "only X left", celebrity endorsement]
-- **Popular hashtags:** [list]
-- **Estimated engagement:** [high/medium/low based on visible signals]
+#### @alamode_slg
+- **Content style:** [e.g., lifestyle flat lays, product-only shots]
+- **Language/tone:** [e.g., mostly English, aspirational]
+- **Current focus:** [e.g., new arrivals, sale]
+- **Hooks used:** [e.g., price callouts, "limited stock"]
+- **Common hashtags:** [list]
 - **What they do well:**
-- **What they miss / gap:**
+- **Gap / what they miss:**
 
-#### [Competitor 2 Name] (@handle)
+#### @trendxmastani
 [same structure]
 
 ---
 
-### Opportunities for [Your Brand Name]
-<!-- Claude interprets the gaps and suggests angles your brand can own -->
-1. [e.g., "Competitors aren't using Hinglish — this is your differentiator"]
-2. [e.g., "No one is targeting tier-2 city buyers specifically — own that"]
-3. [e.g., "Carousel how-to content is missing in this niche"]
-
----
-
-## Notes for Customisation
-
-<!-- Add your known competitors below so Claude uses them by default -->
-**Default competitors to research:**
-<!-- @handle1, @handle2, @handle3 -->
-
-<!-- Any specific things to always check for: -->
-<!-- Example: "Always check if they are running paid promotions (marked 'Sponsored')" -->
-<!-- Example: "Note their posting frequency — how many times per week" -->
+### Opportunities for Miraya
+1. [e.g., "Neither competitor is talking about handcraft or artisan story — this is Miraya's differentiator to own"]
+2. [e.g., "No one is targeting the Durga Puja gifting angle yet — get there first"]
+3. [e.g., "Competitors use English-forward copy — Miraya's Hinglish is a competitive edge with local women"]
+4.
+5.

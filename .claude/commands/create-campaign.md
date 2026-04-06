@@ -1,60 +1,56 @@
 # Skill: Create Social Media Campaign
 
-Create a complete, ready-to-review social media campaign brief for Instagram
-and Facebook — grounded in audience insights, topic research, and brand context.
+Generate a complete, ready-to-review Hinglish campaign draft for Miraya —
+covering Instagram and Facebook — with researched hashtags, a creative prompt,
+and a campaign brief.
 
-**This skill ALWAYS outputs a DRAFT. It never publishes automatically.**
-Publishing only happens when the user explicitly says "post it", "publish", or "go ahead".
+**This skill ALWAYS outputs a DRAFT. Never publishes automatically.**
+Only call `publish_to_instagram` or `publish_to_facebook` when the user says
+"post it", "publish", or "go ahead and post".
 
----
-
-## Inputs Required
-
-Before running, confirm the following context is available (run the relevant
-skills first if not):
-
-- [ ] Brand context loaded (CLAUDE.md)
-- [ ] Audience insights fetched (`/fetch-audience-insights`) — strongly recommended
-- [ ] Topic research done (`/research-topic`) — strongly recommended
-- [ ] Trend context available (`/fetch-trending-posts` + `/understand-trending`) — optional but valuable
-- [ ] Keyword or campaign theme (ask user if not provided)
-
-If context is missing, ask:
-> "Should I run audience insights and topic research first, or do you want to
-> create the campaign with the brand context in CLAUDE.md only?"
+Reads all brand context from CLAUDE.md. No variables need to be asked.
 
 ---
 
-## Campaign Generation Steps
+## Steps
 
-1. **Confirm campaign parameters** with the user (or use what's been provided):
-   - Keyword / theme
-   - Product(s) to feature
-   - Campaign goal (awareness / sales / engagement / UGC)
-   - Tone for this specific post (can differ from default — e.g., urgent for a sale)
-   - Any constraint (e.g., "mention the 20% discount", "don't use emoji")
+1. Read from CLAUDE.md:
+   - Brand voice, tone, and Hinglish style guidelines
+   - Target audience (women 20–45, Siliguri / North Bengal)
+   - Products & Pricing Guide
+   - Sales Process (DM / store visit CTAs only — no website links)
+   - Festival Calendar (for seasonal relevance)
+   - Competitor context (to differentiate)
 
-2. **Generate the Hinglish caption** — write naturally in the brand voice from CLAUDE.md:
-   - Hook (first line must stop the scroll — a question, bold claim, or relatable statement)
-   - Body (the story, benefit, or reason to care — 2-4 lines)
-   - CTA (clear, direct, Hinglish — e.g., "Abhi shop karo", "DM us to order", "Link in bio hai!")
-   - Mix Hindi and English fluidly — not translated, genuinely Hinglish
+2. Confirm the campaign keyword/theme from the user's message or from the
+   `/run-campaign` orchestration context. If missing, ask for it.
 
-3. **Generate hashtags:**
-   - Instagram: 15-25 hashtags (mix of brand, category, niche, trending, location)
-   - Facebook: 3-5 hashtags only (Facebook doesn't benefit from hashtag stacking)
+3. **Research hashtags** using `web_search` before writing the caption:
+   - `"#[keyword] Instagram India ethnic wear [current year]"` — find active tags
+   - `"best hashtags [keyword] Indian fashion Instagram 2025"`
+   - `"Siliguri fashion hashtags Instagram"`
+   - `"handmade kurta hashtags Instagram India"`
+   - Evaluate: high-volume broad tags (reach), mid-volume niche tags (relevance),
+     low-volume local tags (community). Mix all three.
+   - Always include: `#Miraya` `#MirayaIndia` `#SiliguriShopping` `#SiliguriEthnic`
 
-4. **Generate image/creative prompt:**
-   - Describe the ideal visual for this post in enough detail to brief a designer
-     or generate with an AI image tool
-   - Include: subject, mood, colour palette, background, any text overlay suggestion
+4. **Write the Instagram caption in Hinglish:**
+   - **Hook** (line 1): stop-the-scroll — question, bold claim, or relatable statement.
+     Written in Hinglish. Max 10 words.
+   - **Body** (2–4 lines): the story, benefit, or reason to care. Brand voice from CLAUDE.md.
+     Reference handcraft, fabric quality, or cultural moment where genuine.
+   - **CTA**: direct to store visit OR Instagram DM. Never a website link.
+     Options: "Planet Mall aa jao", "DM karo to order", "Comment 'yes' to know more"
 
-5. **Create Facebook variant:**
-   - Facebook audiences respond to slightly longer, more conversational copy
-   - Fewer hashtags, slightly more context in the caption body
-   - Same core message, different delivery
+5. **Write the Facebook caption:**
+   - Slightly longer, more conversational than Instagram
+   - Same core message but add one more line of context
+   - 3–5 hashtags only (not the full Instagram stack)
 
-6. **Generate campaign brief summary** for record-keeping.
+6. **Write the image/creative prompt** in enough detail to brief a designer
+   or use an AI image generation tool.
+
+7. **Compile the full draft** in the output format below.
 
 ---
 
@@ -62,51 +58,56 @@ If context is missing, ask:
 
 ---
 
-## CAMPAIGN DRAFT
+## MIRAYA — CAMPAIGN DRAFT
 
 > **Status: DRAFT — Not Posted**
-> Review and edit before publishing. Tell me "post it" when ready.
+> Review, edit, then say "post it" when ready.
 
 ---
 
 ### Campaign Overview
-| Field | Details |
+| Field | Value |
 |---|---|
-| **Theme / Keyword** | |
-| **Campaign Goal** | |
-| **Products Featured** | |
-| **Target Audience** | |
+| **Keyword / Theme** | |
+| **Goal** | |
+| **Product Featured** | |
+| **Audience** | Women 20–45, Siliguri / North Bengal |
 | **Tone** | |
-| **Created** | [today's date] |
+| **Date Created** | [today] |
 
 ---
 
-### Instagram Post
+### Instagram Post (@miraya_india)
 
 **Caption:**
 ```
-[Hook line — in Hinglish, scroll-stopping]
+[Hook — Hinglish, scroll-stopping, max 10 words]
 
-[Body — 2-4 lines, brand voice from CLAUDE.md]
+[Body — 2–4 lines, brand voice, handcraft/fabric/culture angle]
 
-[CTA — direct and Hinglish]
-```
-
-**Hashtags:**
-```
-#[tag] #[tag] #[tag] ... (15-25 total)
+[CTA — DM / store visit, no website link]
 ```
 
-**Image / Creative Prompt:**
+**Researched Hashtags:**
 ```
-[Detailed visual brief for designer or AI image generation]
-Subject: 
-Mood/vibe: 
-Colours: 
-Background: 
-Text overlay (if any): 
-Style reference: 
+[Category: Broad reach]
+#[tag] #[tag] #[tag] #[tag] #[tag]
+
+[Category: Niche ethnic wear]
+#[tag] #[tag] #[tag] #[tag] #[tag]
+
+[Category: Local / Siliguri]
+#SiliguriShopping #SiliguriEthnic #[tag]
+
+[Category: Brand]
+#Miraya #MirayaIndia
+
+[Category: Trending / seasonal]
+#[tag] #[tag] #[tag]
 ```
+*Total: [n] hashtags — researched and active as of [date]*
+
+**Why these hashtags:** [1–2 lines explaining the mix strategy]
 
 ---
 
@@ -114,49 +115,48 @@ Style reference:
 
 **Caption:**
 ```
-[Slightly longer, more conversational version of the same campaign]
+[Slightly longer, more conversational version]
 
 [CTA]
 ```
 
-**Hashtags:**
+**Hashtags (3–5):**
 ```
-#[tag] #[tag] #[tag] (3-5 only)
+#[tag] #[tag] #[tag] #Miraya #SiliguriShopping
 ```
 
 ---
 
-### Suggested Posting Time
-- **Instagram:** [e.g., Tuesday or Thursday, 7–9 PM IST — when Indian audiences are most active]
+### Image / Creative Prompt
+
+```
+Subject: [what to show — product, model, lifestyle]
+Mood: [e.g., warm, festive, soft, rich]
+Colour palette: [e.g., warm terracotta, ivory, gold accents]
+Background: [e.g., minimal white studio / outdoor market / traditional courtyard]
+Lighting: [e.g., soft natural light / golden hour / studio soft box]
+Styling details: [e.g., dupatta draped over shoulder, minimal gold jewellery]
+Text overlay (if any): [quote or price or tagline to overlay]
+Style reference: [e.g., editorial lifestyle, product flat lay, real customer feel]
+```
+
+---
+
+### Posting Recommendation
+- **Instagram:** [e.g., Thursday or Saturday, 7–9 PM IST]
 - **Facebook:** [e.g., Wednesday, 12–2 PM IST]
 
 ---
 
 ### Editor Notes
-<!-- Any notes about what can be personalised, image sourcing, or follow-up posts -->
+[Any notes on what to personalise, image sourcing suggestions, or follow-up post ideas]
 
 ---
 
-## After Showing the Draft
-
-Ask:
-> "How does this look? You can ask me to:
-> - Edit the caption or tone
+After showing the draft, ask:
+> "Kaisa laga? You can ask me to:
+> - Edit the caption or change the tone
 > - Try a different angle
+> - Swap the hashtags
 > - Generate an alternative version
 > - Post it to Instagram, Facebook, or both"
-
-Only call `publish_to_instagram` or `publish_to_facebook` after explicit user confirmation.
-
----
-
-## Notes for Customisation
-
-<!-- Add any campaign templates or recurring formats your brand uses -->
-<!-- Example: "For sale campaigns, always lead with the discount percentage in the hook" -->
-<!-- Example: "For new arrivals, always end with 'limited pieces — jaldi karo!'" -->
-<!-- Example: "For UGC prompts, always include a branded hashtag challenge" -->
-
-<!-- Default posting schedule -->
-**Our usual posting days:** <!-- e.g., Tuesday, Thursday, Saturday -->
-**Our usual posting time:** <!-- e.g., 7 PM IST -->

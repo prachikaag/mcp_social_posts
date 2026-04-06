@@ -1,91 +1,67 @@
 # Skill: Fetch Trending Posts with Target Keyword
 
-Find what content is currently trending around a keyword on Instagram,
-Facebook, and broader social/web — so campaigns can ride existing momentum
-rather than starting cold.
+Find what content is currently trending around a keyword on Instagram and
+the broader Indian social media ecosystem — so Miraya campaigns ride momentum.
+
+Reads brand context from CLAUDE.md. Keyword is the only input needed from the user.
 
 ---
 
-## Inputs Required
+## Input
 
-- **Keyword or topic** (ask the user if not provided)
-- **Platform focus** — Instagram, Facebook, or both (default: both)
-- **Niche context** — read from CLAUDE.md (product category, target audience)
-
-If no keyword is provided, ask:
-> "What keyword or topic should I search for trending content?
-> For example: 'Navratri outfits', 'monsoon skincare', 'affordable ethnic wear'."
+**Keyword:** Read from the user's message or the `/run-campaign` call.
+If not provided, ask: *"What keyword or theme should I search? e.g. 'cotton kurta', 'festive ethnic wear', 'Durga Puja outfit'"*
 
 ---
 
 ## Steps
 
-1. **Web search for trending content around the keyword:**
-   - `[keyword] trending Instagram [current month year]`
-   - `[keyword] viral posts India [current month year]`
-   - `[keyword] hashtag trending`
-   - `[keyword] most liked posts`
+1. Run these `web_search` calls:
+   - `"[keyword] Instagram trending India [current month year]"`
+   - `"[keyword] viral post Indian women fashion"`
+   - `"[keyword] ethnic wear content ideas India"`
+   - `"[keyword] Instagram hashtags India [current year]"`
 
-2. **Search for related hashtags:**
-   - `#[keyword] Instagram posts`
-   - Look for hashtag volume indicators, related tags, niche sub-tags
+2. Run `search_news`:
+   - `"[keyword] India fashion trend [current month year]"`
 
-3. **Search for trending formats:**
-   - Is this keyword being used more in Reels, carousels, static images, or text posts?
-   - Any meme formats, audio trends, or challenges attached to it?
+3. Look for:
+   - What **content formats** are leading (carousel, Reel, static, quote card)
+   - What **emotions** are being triggered (nostalgia, aspiration, humour, pride)
+   - What **language patterns** are popular (Hinglish phrases, Bengali references)
+   - Which hashtags appear repeatedly across multiple sources
 
-4. **Look for Indian/regional angle:**
-   - `[keyword] India social media trend`
-   - `[keyword] Hinglish viral`
-   - Any specific cities, festivals, or cultural moments attached to the keyword?
+4. Filter for **Indian / North Bengal relevance** — prioritise content resonating
+   with women in Siliguri and broader North Bengal / West Bengal.
 
-5. **Check recency** — prioritise content from the last 7-14 days.
+5. Check recency — favour the last 14 days.
 
 ---
 
 ## Output Format
 
-### Trending Posts Report
-**Keyword:** [keyword]
+### Trending Posts Report — "[keyword]"
 **Date:** [today's date]
-**Platforms checked:** Instagram, Facebook, Web
-
----
 
 #### What's Trending Right Now
-- **Content format leading the trend:** [e.g., carousel, Reel, static image with text]
-- **Tone of trending content:** [e.g., humorous, aspirational, informational, emotional]
-- **Language pattern:** [e.g., mostly Hinglish, English captions with Hindi hashtags]
+- **Dominant content format:** [e.g., carousel "5 ways to style a cotton kurta"]
+- **Tone of trending content:** [e.g., aspirational + relatable]
+- **Language pattern:** [e.g., Hinglish captions, Bengali hashtags mixed in]
 
-#### Top Trending Hashtags
-| Hashtag | Approximate volume | Notes |
-|---|---|---|
-| #[tag] | [e.g., 2.3M posts] | [e.g., highly competitive] |
-| #[tag] | | |
-| #[tag] | | [e.g., niche, lower competition — good to own] |
+#### Top Hashtags Found
+| Hashtag | Notes |
+|---|---|
+| #[tag] | [e.g., high volume, competitive] |
+| #[tag] | [e.g., niche, good for local reach] |
+| #[tag] | [e.g., trending this week] |
 
 #### What Top Posts Are Doing
-1. [e.g., "Strong hook in first line — 'Ye summer mein yahi chahiye tha!'"]
-2. [e.g., "Before/after format performing well"]
-3. [e.g., "Posts with price callout are getting high saves"]
-4. [e.g., "Colour palette — bright pinks and oranges dominating"]
+1. [e.g., "Strong first line hooks — 'Ye kurta dekh ke mom ne bhi order kar liya!'"]
+2. [e.g., "Before/after styling posts getting high saves"]
+3. [e.g., "Price mention in caption is driving DM enquiries"]
 
-#### Indian/Cultural Angle
-<!-- Any festivals, cultural moments, news events tied to this keyword right now -->
-
-#### Relevance to Your Brand
-<!-- Claude connects the trend to the brand context in CLAUDE.md -->
-- How this keyword maps to your product category:
-- Audience overlap (does this trend reach your target audience?):
-- Risk / caution (anything off-brand about this trend?):
-
----
-
-## Notes for Customisation
-
-<!-- Add any default keywords to always monitor -->
-**Default keywords to track:**
-<!-- e.g., ethnic wear, kurta, festive fashion, Indian fashion -->
-
-<!-- Specific platforms or communities to always check -->
-<!-- e.g., "Always check what's trending on ShareChat and Moj for tier-2 audiences" -->
+#### Relevance to Miraya
+- **How this maps to our products:** [from CLAUDE.md product list]
+- **Audience overlap:** [does this trend reach Miraya's 20-45 women in Siliguri?]
+- **Cultural/local angle:** [any West Bengal or North Bengal hook?]
+- **Risk:** [anything off-brand?]

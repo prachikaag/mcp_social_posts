@@ -1,132 +1,186 @@
-# Brand Context — HinglishReach
+# Brand Context — Miraya
 
-This file is read automatically by Claude for every session in this project.
-Fill in each section with your brand details. Claude will use this as context
-for all campaign generation, audience research, and social media tasks.
+This file is the single source of truth for all campaign generation, research,
+and social media tasks. Every skill and agent reads from here automatically.
+Do not ask the user for information that is already defined in this file.
 
 ---
 
-## Brand Description
+## Brand Identity
 
-<!-- Who you are, what you do, your story, your USP -->
-<!-- Example: "We are [Brand Name], a D2C ethnic wear brand founded in 2021 in Jaipur.
-     We specialise in handblock-printed cotton kurtas and co-ord sets for everyday wear.
-     Our USP is affordable traditional craftsmanship — no middlemen, direct from artisans." -->
+**Brand Name:** Miraya
+**Category:** Women's ethnic wear
+**Location:** Planet Mall, B-35, 734001, Siliguri, West Bengal, India
+**Instagram Handle:** @miraya_india
+**Sales Channels:** Physical store only + Instagram DMs / Instagram payments (no e-commerce website)
 
-**Brand Name:**
-**Founded:**
-**Based in:**
 **What we sell:**
-**Our USP:**
-**Brand story (2-3 lines):**
+- Traditional kurtas with pure handwork, hand embroidery, and premium fabric
+- Cotton tunics
+- All categories of women's ethnic wear
+
+**USP:** Authentic handcrafted ethnic wear — real handwork, real fabric, real craftsmanship.
+Not mass-produced. Each piece reflects traditional artistry.
+
+**Brand Story:**
+Miraya is a women's ethnic wear store in Siliguri, West Bengal, rooted in the love for
+traditional Indian handcraft. We believe in clothing that carries a story — pure fabrics,
+hand embroidery, and artisan craftsmanship that fast fashion cannot replicate.
+Our customers are women who value quality, heritage, and looking effortlessly ethnic.
 
 ---
 
 ## Brand Voice & Tone
 
-<!-- How your brand speaks — Claude will mirror this in every caption and post -->
-<!-- Examples: warm, festive, aspirational, playful, empowering, no-nonsense, premium -->
+**Language:** Hinglish (natural Hindi-English mix the way urban Indian women actually speak)
+**Overall tone:** Warm, aspirational, feminine, culturally rooted — never salesy or pushy
+**Formality:** Semi-casual — like a knowledgeable friend who understands fashion
+**Emoji usage:** Moderate — use to add warmth, not clutter
+**Key themes to weave in:** Handcraft, purity, heritage, effortless elegance, "made with love"
 
-**Overall tone:**
-**Language style:** Hinglish (Hindi-English mix) — natural, conversational, relatable
-**Formality level:** <!-- casual / semi-formal / formal -->
-**Emoji usage:** <!-- heavy / moderate / minimal / none -->
-**Words/phrases we always use:**
-**Words/phrases we never use:**
-**Brand tagline (if any):**
+**Words/phrases we love:**
+- "Haath ka kaam" (handwork), "pure fabric", "handcrafted with love"
+- "Apni favourite ethnic look", "traditional with a modern feel"
+- "Sirf Miraya mein milega" (only at Miraya)
+
+**Words/phrases to avoid:**
+- "Cheap", "discount dhamaka", "sale sale sale" (avoid aggressive sale language)
+- Do not over-promise delivery or shipping (we don't deliver online — store + DM only)
+
+**Brand tagline (working):** *"Woh ethnic feel, woh authentic touch."*
 
 ---
 
 ## Target Audience
 
-<!-- General audience profile — Claude uses this to tailor every campaign -->
-
 **Primary audience:**
-- Age range:
-- Gender:
-- Location: <!-- e.g., Tier-1 + Tier-2 Indian cities, or specific states -->
-- Language: Hinglish speakers
-- Income level: <!-- budget / mid-range / premium -->
-- Shopping behaviour: <!-- e.g., "shops online 2-3x a month, price-conscious, likes festive deals" -->
-- Platforms they use most: Instagram, Facebook
-- Pain points: <!-- what problems do they have that your product solves -->
-- Aspirations: <!-- what do they want / dream of -->
+- **Who:** Women in and around Siliguri, West Bengal
+- **Age range:** 20–45
+- **Interests:** Ethnic fashion, traditional wear, handcrafted clothing, festivals, weddings
+- **Income:** Mid to upper-mid (willing to pay for quality over quantity)
+- **Shopping behaviour:** Visits malls, browses Instagram for style inspiration, DMs brands to enquire
+- **Pain points:** Hard to find genuine handwork at fair prices; most stores sell machine-made
+- **Aspirations:** Looking elegant and culturally connected without compromising on fabric quality
+- **Language:** Hinglish, Bengali-Hindi mix, understands English
 
-**Secondary audience (if any):**
+**Secondary audience:**
+- Women in nearby areas (Jalpaiguri, Darjeeling, North Bengal region)
+- Bengali diaspora following ethnic fashion on Instagram
 
 ---
 
 ## Products & Pricing Guide
 
-<!-- List your key products with prices. Claude uses this to mention specific products
-     in campaigns and write accurate CTAs. Update this whenever you add new products. -->
+> Update prices when they change. The agent will only mention prices listed here.
 
-### Product Categories
-
-| Category | Description | Price Range |
+| Product | Description | Price Range |
 |---|---|---|
-| <!-- e.g., Kurtas --> | | <!-- e.g., ₹499 – ₹1,299 --> |
-| | | |
-| | | |
+| Traditional Kurtas | Pure fabric, hand embroidery, handwork | ₹ [add price range] |
+| Cotton Tunics | Breathable cotton, everyday wear | ₹ [add price range] |
+| Ethnic Co-ords / Sets | [add if applicable] | ₹ [add price range] |
+| Dupattas | [add if applicable] | ₹ [add price range] |
 
-### Hero / Bestseller Products
+**Hero / Bestsellers:**
+<!-- List your top-selling or most photographed pieces here -->
+<!-- Example: "Chikankari cotton kurta — bestseller, ₹899" -->
 
-| Product Name | Description | Price | SKU/Link |
-|---|---|---|---|
-| | | | |
-| | | | |
+**Current Promotions:**
+<!-- Update before each campaign season -->
+<!-- Example: "Durga Puja collection launch — 10% off on first visit, mention Instagram" -->
 
-### Current Offers / Promotions
-
-<!-- Update this section before running any campaign -->
-| Offer | Details | Valid Until |
-|---|---|---|
-| | | |
-
-### Pricing Philosophy
-
-<!-- e.g., "We are affordable-premium. Never position as cheap. Always emphasise value for money." -->
+**Pricing Philosophy:** Mid-premium. Emphasise value of handcraft over price.
+Never position as "budget". Position as "worth it".
 
 ---
 
-## Campaign Rules (Always Follow)
+## Sales Process (Important for CTAs)
 
-These rules apply to every campaign Claude creates, without exception:
-
-1. **Always output as DRAFT first.** Never call `publish_to_facebook` or `publish_to_instagram`
-   without the user explicitly saying "post it", "publish", or "go ahead and post".
-
-2. **Always write in Hinglish.** Mix Hindi and English naturally — the way urban Indians
-   actually speak. Never write entirely in English or entirely in Hindi unless asked.
-
-3. **Always include hashtags.** Mix brand hashtags, category hashtags, and trending tags.
-   Aim for 15–25 hashtags per Instagram post, 3–5 for Facebook.
-
-4. **Always include a CTA.** Every post must end with a clear call to action.
-
-5. **Reference audience insights when available.** If insights have been fetched in this
-   session, use the top cities, age groups, and gender split to personalise the copy.
-
-6. **Always include an image prompt.** Every campaign draft must include a suggested
-   visual/creative prompt so the image can be generated or sourced.
-
-7. **Never make up prices.** Only mention specific prices if they appear in the
-   Products & Pricing Guide above.
+Since we sell via **store visits and Instagram DMs only**:
+- Every CTA must direct to one of: "Visit us at Planet Mall" / "DM to enquire" / "DM to order"
+- Never use "Shop now" with a link — we have no online store
+- For Instagram: "Link in bio" is not relevant — use "DM us" or "Comment below"
+- Include store address in campaigns targeting local discovery:
+  **Planet Mall, B-35, Siliguri – 734001**
 
 ---
 
-## Connected Accounts
+## Connected Meta Accounts
 
-<!-- Fill in after running auth_setup.py and calling list_connected_accounts -->
+<!-- Fill in after running auth_setup.py -->
+**Facebook Page ID:** [add after setup]
+**Facebook Page Name:** [add after setup]
+**Instagram User ID:** [add after setup]
+**Instagram Username:** @miraya_india
 
-**Facebook Page ID:**
-**Facebook Page Name:**
-**Instagram User ID:**
-**Instagram Username:**
+---
+
+## Competitor Brands
+
+These brands operate in the same market and should be monitored regularly.
+The `/fetch-competitor-insights` skill reads this list automatically.
+
+| Handle | Notes |
+|---|---|
+| @alamode_slg | Local Siliguri fashion brand — monitor content style and offers |
+| @trendxmastani | Local competitor — monitor for tone, hashtags, campaign themes |
+
+---
+
+## Inspiration Brands
+
+> **TO FILL IN:** Add 3–5 Instagram handles of brands whose content style,
+> aesthetic, or campaign themes you admire. These will be used to shape
+> the visual and copy direction of your campaigns.
+
+| Handle | What you like about them |
+|---|---|
+| @[handle] | [e.g., "Love their carousel storytelling"] |
+| @[handle] | [e.g., "Their Hinglish captions feel very natural"] |
+| @[handle] | [e.g., "Great use of festival themes"] |
+
+---
+
+## Campaign Rules (Always Follow — No Exceptions)
+
+1. **Always output as DRAFT.** Never call `publish_to_facebook` or `publish_to_instagram`
+   without the user explicitly typing "post it", "publish", or "go ahead and post".
+
+2. **Always write in Hinglish.** Natural Hindi-English mix. Not translated — genuinely spoken.
+
+3. **Always research hashtags** before finalising a post. Do not guess hashtags.
+   Use `web_search` to find which hashtags are active and relevant for the topic + niche.
+
+4. **CTAs must match our sales channel.** Always direct to store visit or Instagram DM.
+   Never use "shop now" with a link. Never mention online delivery.
+
+5. **Always include an image/creative prompt** with every campaign draft.
+
+6. **Read audience insights** if available in the session before generating campaigns.
+
+7. **Never invent prices.** Only mention prices from the Products & Pricing Guide above.
+
+8. **Location matters.** Siliguri is in North Bengal — reference local festivals
+   (Durga Puja, Eid, Diwali, Teej, Bengali New Year / Poila Boishakh) and
+   local culture where relevant.
+
+---
+
+## Key Festivals & Campaign Calendar
+
+| Festival / Moment | Approximate Timing | Notes |
+|---|---|---|
+| Poila Boishakh (Bengali New Year) | Mid-April | Very important for Bengali audience |
+| Eid | Varies | Large Muslim audience in North Bengal |
+| Durga Puja | Oct | Biggest festival for Bengali women's ethnic wear |
+| Navratri / Dussehra | Oct | Important for kurta/ethnic wear sales |
+| Diwali | Oct–Nov | |
+| Christmas / New Year | Dec | Mall foot traffic peaks |
+| Wedding Season | Nov–Feb | Bridal party / guest wear — high demand |
+| Mother's Day | May | Gift angle |
 
 ---
 
 ## Session Notes
 
-<!-- Optional: add any temporary context for the current campaign season -->
-<!-- e.g., "We are running a Diwali campaign in October. Focus on gifting angle." -->
+<!-- Temporary context for current campaign. Clear after each campaign. -->
+<!-- Example: "Running Durga Puja campaign. Focus: new handembroidered kurta collection." -->
