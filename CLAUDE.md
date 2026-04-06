@@ -125,7 +125,7 @@ The `/fetch-competitor-insights` skill reads this list automatically.
 |---|---|
 | @alamode_slg | Local Siliguri fashion brand — monitor content style and offers |
 | @trendxmastani | Local competitor — monitor for tone, hashtags, campaign themes |
-| @hummingbirdlabel | Added by owner — monitor content style, offers, and audience engagement |
+| @hummingbirdlabel | Local Siliguri fashion label — monitor content style, offers, and audience engagement |
 
 ---
 
