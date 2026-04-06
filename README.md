@@ -1,172 +1,116 @@
-# HinglishReach
+# HinglishReach MCP Server
 
-**AI-powered Hinglish social media campaign generator for Indian e-commerce brands**
+**An MCP (Model Context Protocol) server that lets Claude manage your Facebook and Instagram social media campaigns in Hinglish.**
 
-Enter a keyword → get a ready-to-post Facebook and Instagram campaign in Hindi-English (Hinglish), tailored to your brand, audience, and products.
+Instead of a web app, you talk to Claude directly:
+> *"Create a campaign for my ethnic wear brand, keyword: Eid sale, target women 25-40 in tier-2 cities"*
 
----
-
-## Overview
-
-HinglishReach is a Python/FastAPI web app that connects to your Facebook Page and Instagram Business account, reads your audience insights, and uses Claude AI to generate brand-specific social media campaigns in Hinglish — the natural mix of Hindi and English spoken by hundreds of millions of Indian consumers.
-
-**Who it's for:** Indian e-commerce brands, D2C sellers, and online stores targeting Hindi-speaking audiences on Instagram and Facebook.
-
-**How it works:**
-1. You connect your Facebook Page and Instagram Business account via OAuth
-2. You enter a keyword (e.g. "summer sale", "new collection", "festive offer")
-3. You describe your brand, products, and target audience
-4. Claude AI generates Hinglish captions, hashtags, and a call-to-action
-5. Preview and publish directly to your social accounts — or copy and post manually
+Claude fetches your audience insights, writes the Hinglish caption, hashtags, and CTA — then posts to your Facebook Page and Instagram Feed.
 
 ---
 
-## Features
+## What is MCP?
 
-- **Keyword-based campaign generation** — one keyword produces a full campaign brief
-- **Hinglish content** — Claude AI writes in natural Hindi-English mix, tuned for Indian audiences
-- **Meta account integration** — connect your Facebook Page and Instagram Business account via Meta OAuth 2.0
-- **Audience insights** — pulls basic demographics (age, gender, top cities) and engagement metrics from your connected accounts
-- **Brand customisation** — set your brand name, product category, niche, tone, and target audience description
-- **Campaign preview** — review the generated content before publishing
-- **One-click publishing** — post directly to Facebook Page Feed and Instagram Feed
-- **Suggested image prompts** — get an AI-generated prompt to create visuals for each post
+Model Context Protocol (MCP) is an open standard that lets Claude use external tools — like calling APIs, reading databases, or posting to social media — directly from conversation. This server exposes your Meta (Facebook + Instagram) account as tools Claude can use.
 
-> **Note on API limitations:**
-> - Reels and Stories **cannot** be published via the Meta API — feed posts only
-> - Audience demographic data has a **48-hour reporting lag**
-> - Demographic insights require **100+ followers** on the connected account
-> - Granular behavioral/interest targeting data is not available (Meta restriction post-2018)
+No web frontend. No forms. Just conversation.
 
 ---
 
-## Tech Stack
+## How It Works
 
-| Layer | Technology |
+```
+You (talking to Claude Code or Claude Desktop)
+          │
+          ▼
+    Claude (AI reasoning + Hinglish content generation)
+          │  calls MCP tools
+          ▼
+  HinglishReach MCP Server (Python)
+          │
+          ▼
+    Meta Graph API
+      ├── Facebook Page API  → read insights, publish posts
+      └── Instagram Graph API → read insights, publish posts
+```
+
+---
+
+## Tools Claude Gets
+
+| Tool | What it does |
 |---|---|
-| Backend | Python 3.11+ + FastAPI |
-| AI Engine | Claude API (`claude-sonnet-4-6`) via Anthropic SDK |
-| Social Media API | Meta Graph API v22.0 (Facebook + Instagram) |
-| Frontend | React (production) / Jinja2 templates (MVP) |
-| Auth | Meta OAuth 2.0 |
-| Database | SQLite (development) / PostgreSQL (production) |
+| `list_connected_accounts` | Lists your connected Facebook Pages and Instagram Business accounts |
+| `get_facebook_insights` | Fetches audience demographics + engagement from your Facebook Page |
+| `get_instagram_insights` | Fetches audience demographics + engagement from your Instagram account |
+| `publish_to_facebook` | Posts a caption (+ optional image) to your Facebook Page Feed |
+| `publish_to_instagram` | Posts a caption + image to your Instagram Feed |
+
+Claude handles everything else — generating Hinglish captions, hashtags, CTAs, and image prompts — using its own intelligence, no extra API calls needed.
 
 ---
 
-## Architecture
+## Example Conversation
 
 ```
-User Browser
-     │
-     ▼
-FastAPI Backend
-     ├──► Claude API (Anthropic)       ← generates Hinglish campaign content
-     └──► Meta Graph API               ← reads audience data, publishes posts
-               ├── Facebook Page API
-               └── Instagram Graph API
+You:  Create a festive campaign for my saree brand.
+      Keyword: Navratri collection. My audience is women 25-45, Gujarat and Rajasthan.
+
+Claude: Let me pull your audience insights first...
+        [calls get_instagram_insights]
+        [calls get_facebook_insights]
+
+        Here's your campaign:
+
+        Caption (Hinglish):
+        "Ye Navratri, apni favourite saree mein celebrate karo! ✨
+        Our new Navratri Collection has arrived — vibrant colours,
+        premium silk, perfect for every garba night.
+        Limited pieces — order karo aaj hi! 🙏🏽"
+
+        Hashtags: #NavratriCollection #SareeLove #EthnicWear
+                  #NavratriSpecial #GarbaLook #IndianFashion
+
+        CTA: "Shop now — link in bio!"
+
+        Image prompt: "Woman in bright red-orange silk saree dancing garba,
+        warm festive lighting, traditional jewellery, joyful expression"
+
+        Should I post this to Instagram and Facebook, or do you want to edit first?
+
+You:  Change the CTA to "DM us to order" and post it.
+
+Claude: [calls publish_to_instagram]
+        [calls publish_to_facebook]
+        Done! Posted to both accounts.
 ```
 
 ---
 
-## What This App Can and Cannot Do
+## What This Can and Cannot Do
 
 | Capability | Status |
 |---|---|
-| Publish image/video/carousel posts to Facebook Page Feed | ✅ Supported |
-| Publish image/video/carousel posts to Instagram Feed | ✅ Supported |
-| Read audience demographics (age, gender, location, top cities) | ✅ Supported |
-| Read engagement metrics (likes, comments, reach, impressions) | ✅ Supported |
-| Publish Reels | ❌ Not supported by Meta API |
-| Publish Stories | ❌ Not supported by Meta API |
-| Real-time demographic data | ❌ 48-hour lag |
-| Accounts with fewer than 100 followers | ❌ No demographic data available |
-| Granular behavioral/interest audience data | ❌ Removed by Meta post-Cambridge Analytica (2018) |
+| Post images/videos/carousels to Facebook Page Feed | ✅ |
+| Post images/videos/carousels to Instagram Feed | ✅ |
+| Read audience demographics (age, gender, top cities) | ✅ |
+| Read engagement metrics (likes, comments, reach, impressions) | ✅ |
+| Generate Hinglish captions, hashtags, CTAs | ✅ (Claude does this) |
+| Publish Reels or Stories | ❌ Meta API limitation |
+| Real-time demographics | ❌ 48-hour lag (Meta limitation) |
+| Accounts with fewer than 100 followers | ❌ No demographic data |
+| Granular interest/behavioral targeting data | ❌ Removed by Meta post-2018 |
 
 ---
 
-## Meta Developer Setup
-
-You need a Meta Developer account and a Facebook App before running this project. Follow these steps:
-
-### 1. Create a Meta Developer Account
-- Go to [developers.facebook.com](https://developers.facebook.com)
-- Log in with your Facebook account and register as a developer
-
-### 2. Create a New App
-- Click **My Apps → Create App**
-- Select **Business** as the app type
-- Fill in your app name and contact email
-
-### 3. Add Required Products
-In your app dashboard, add the following products:
-- **Facebook Login** — for OAuth user authentication
-- **Instagram Graph API** — for Instagram Business account access
-
-### 4. Configure OAuth Redirect URI
-- Go to **Facebook Login → Settings**
-- Add your redirect URI (e.g. `http://localhost:8000/auth/callback` for local dev)
-
-### 5. Required OAuth Scopes / Permissions
-Your app will request the following permissions from users:
-
-```
-instagram_business_basic
-instagram_business_content_publish
-pages_manage_posts
-pages_read_engagement
-pages_show_list
-```
-
-### 6. Switch to Live Mode
-- The app starts in **Development mode** (only accessible to app admins/testers)
-- To let real users connect their accounts, submit for **Meta App Review** and switch to **Live mode**
-- Meta will review your use of each permission — prepare a screencast demo of your app
-
-### 7. Get Your App Credentials
-From **App Settings → Basic**, note your:
-- `App ID` → `META_APP_ID`
-- `App Secret` → `META_APP_SECRET`
-
----
-
-## User Flow
-
-```
-1. Connect Account
-   └── User logs in via Meta OAuth → grants permissions for Facebook Page + Instagram
-
-2. Audience Insights (auto-fetched)
-   └── App reads: top age groups, gender split, top cities, recent engagement metrics
-
-3. Campaign Input
-   └── User enters:
-         • Keyword (e.g. "Eid sale", "monsoon collection")
-         • Brand name
-         • Product category (e.g. ethnic wear, skincare, electronics)
-         • Target audience description (e.g. "women 25-40, tier-2 cities, budget-conscious")
-         • Tone preference (e.g. festive, urgent, warm, playful)
-
-4. AI Generation (Claude API)
-   └── Generates:
-         • Hinglish caption (2-3 paragraphs)
-         • Hashtags (mix of Hindi and English tags)
-         • Call-to-action line
-         • Suggested image/creative prompt
-
-5. Preview & Publish
-   └── User reviews content → publishes to Facebook and/or Instagram, or copies manually
-```
-
----
-
-## Local Setup
+## Setup
 
 ### Prerequisites
 - Python 3.11+
-- A Meta Developer App (see setup above)
-- An Anthropic API key ([console.anthropic.com](https://console.anthropic.com))
+- Claude Desktop or Claude Code (to use the MCP server)
+- A Meta Developer account + Facebook App (see below)
 
-### Installation
+### 1. Clone and install
 
 ```bash
 git clone https://github.com/prachikaag/mcp_social_posts.git
@@ -176,24 +120,95 @@ source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### Environment Variables
+### 2. Set up Meta Developer App (one-time)
 
-Create a `.env` file in the project root:
+You need a Meta App to call the Graph API. Follow these steps:
 
-```env
-ANTHROPIC_API_KEY=your_anthropic_api_key
-META_APP_ID=your_meta_app_id
-META_APP_SECRET=your_meta_app_secret
-META_REDIRECT_URI=http://localhost:8000/auth/callback
+1. Go to [developers.facebook.com](https://developers.facebook.com) and register
+2. Click **My Apps → Create App → Business**
+3. Add products: **Facebook Login** + **Instagram Graph API**
+4. Under **Facebook Login → Settings**, add redirect URI: `http://localhost:8888/callback`
+5. Note your **App ID** and **App Secret** from **App Settings → Basic**
+
+Required OAuth permissions:
+```
+instagram_business_basic
+instagram_business_content_publish
+pages_manage_posts
+pages_read_engagement
+pages_show_list
 ```
 
-### Run the App
+### 3. Get your access token (one-time)
+
+Run the included helper script — it opens a browser, walks you through Meta OAuth, and saves a long-lived token to your `.env` file:
 
 ```bash
-uvicorn main:app --reload
+python auth_setup.py
 ```
 
-Open [http://localhost:8000](http://localhost:8000) in your browser.
+This only needs to be done once. The token lasts ~60 days and can be refreshed.
+
+### 4. Configure environment
+
+Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+```env
+META_APP_ID=your_app_id
+META_APP_SECRET=your_app_secret
+META_ACCESS_TOKEN=your_long_lived_token   # filled by auth_setup.py
+```
+
+### 5. Register with Claude Desktop
+
+Add the server to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on Mac):
+
+```json
+{
+  "mcpServers": {
+    "hinglishreach": {
+      "command": "python",
+      "args": ["/absolute/path/to/mcp_social_posts/server.py"],
+      "env": {
+        "META_APP_ID": "your_app_id",
+        "META_APP_SECRET": "your_app_secret",
+        "META_ACCESS_TOKEN": "your_long_lived_token"
+      }
+    }
+  }
+}
+```
+
+Or if using Claude Code, run:
+
+```bash
+claude mcp add hinglishreach python /absolute/path/to/mcp_social_posts/server.py
+```
+
+### 6. Start using it
+
+Open Claude Desktop or Claude Code and start talking:
+
+> *"What does my Instagram audience look like this week?"*
+> *"Create a Hinglish Diwali campaign for my skincare brand and post it."*
+
+---
+
+## Project Structure
+
+```
+mcp_social_posts/
+├── server.py          # MCP server — defines all tools Claude can call
+├── meta_client.py     # Meta Graph API wrapper (insights + publishing)
+├── auth_setup.py      # One-time OAuth helper to get your access token
+├── requirements.txt
+├── .env.example
+└── README.md
+```
 
 ---
 
@@ -202,18 +217,11 @@ Open [http://localhost:8000](http://localhost:8000) in your browser.
 | Version | Milestone |
 |---|---|
 | v0.1 | README + project structure |
-| v0.2 | Meta OAuth integration (Facebook + Instagram login) |
-| v0.3 | Audience insights dashboard |
-| v0.4 | Claude API Hinglish content generation |
-| v0.5 | Campaign preview UI |
-| v0.6 | One-click publishing to Facebook and Instagram Feed |
-| v1.0 | Campaign scheduler + post history |
-
----
-
-## Contributing
-
-This project is in early planning. Contributions, feedback, and ideas are welcome — open an issue or pull request.
+| v0.2 | Meta OAuth token helper (`auth_setup.py`) |
+| v0.3 | Meta Graph API client (insights + publishing) |
+| v0.4 | MCP server with all tools |
+| v0.5 | Hinglish campaign prompts + Claude integration |
+| v1.0 | Multi-account support + campaign history |
 
 ---
 
