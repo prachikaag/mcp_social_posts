@@ -1,89 +1,127 @@
-# HinglishReach MCP Server
+# Miraya Social Media Agent
 
-**An MCP (Model Context Protocol) server that lets Claude manage your Facebook and Instagram social media campaigns in Hinglish.**
+**An MCP server + agentic pipeline that runs Miraya's entire social media operation from conversation.**
 
-Instead of a web app, you talk to Claude directly:
-> *"Create a campaign for my ethnic wear brand, keyword: Eid sale, target women 25-40 in tier-2 cities"*
+Miraya is a women's ethnic wear brand in Siliguri, West Bengal. This system lets Claude:
+- Research your audience, competitors, and trends
+- Generate Hinglish campaigns and storytelling comic posts
+- Create Canva-ready design visuals
+- Publish directly to Facebook and Instagram — always as a draft first, never auto-posted
 
-Claude fetches your audience insights, writes the Hinglish caption, hashtags, and CTA — then posts to your Facebook Page and Instagram Feed.
-
----
-
-## What is MCP?
-
-Model Context Protocol (MCP) is an open standard that lets Claude use external tools — like calling APIs, reading databases, or posting to social media — directly from conversation. This server exposes your Meta (Facebook + Instagram) account as tools Claude can use.
-
-No web frontend. No forms. Just conversation.
+No forms. No dashboards. Just talk to Claude.
 
 ---
 
 ## How It Works
 
 ```
-You (talking to Claude Code or Claude Desktop)
+You (Claude Code or Claude Desktop)
           │
           ▼
-    Claude (AI reasoning + Hinglish content generation)
-          │  calls MCP tools
+    Claude — reads CLAUDE.md + art_style.md for brand context
+          │  invokes skills and agents
           ▼
-  HinglishReach MCP Server (Python)
+  Miraya MCP Server (server.py)
+    ├── Meta Graph API     → audience insights + publishing
+    └── Web Search (DDG)   → competitor research, trends, hashtags
           │
           ▼
-    Meta Graph API
-      ├── Facebook Page API  → read insights, publish posts
-      └── Instagram Graph API → read insights, publish posts
+    Campaign Draft → you review → "post it" → published
 ```
 
 ---
 
-## Tools Claude Gets
+## Two Campaign Modes
 
-| Tool | What it does |
+### 1. Product Campaigns (`/run-campaign`)
+Keyword-driven. Researches trends, writes Hinglish caption + hashtags + image prompt.
+
+```
+/run-campaign cotton kurta
+/run-campaign Durga Puja collection
+/run-campaign spring summer vibrant Indian textiles
+```
+
+### 2. Story Campaigns (`/create-story-post`, `/create-comic-campaign`)
+Caricature comic posts — the *"Woh Har Roz Ki Ladki"* series. Shows everyday Indian women
+(the Young Mother, the Working Woman, the Elder Sister, the Woman of the House) in their
+real daily lives, and how Miraya fits into those moments. Deeply emotional, highly shareable.
+
+```
+/create-story-post morning routine
+/create-comic-campaign Durga Puja — women who celebrate quietly
+/create-comic-campaign spring summer — everyday moments --posts 3
+```
+
+---
+
+## Available Skills
+
+### Research
+| Command | What it does |
 |---|---|
-| `list_connected_accounts` | Lists your connected Facebook Pages and Instagram Business accounts |
-| `get_facebook_insights` | Fetches audience demographics + engagement from your Facebook Page |
-| `get_instagram_insights` | Fetches audience demographics + engagement from your Instagram account |
-| `publish_to_facebook` | Posts a caption (+ optional image) to your Facebook Page Feed |
-| `publish_to_instagram` | Posts a caption + image to your Instagram Feed |
+| `/fetch-audience-insights` | Live Instagram + Facebook demographics and engagement |
+| `/fetch-competitor-insights` | Researches @alamode_slg and @trendxmastani — gaps and opportunities |
+| `/fetch-trending-posts [keyword]` | Trending content for a keyword on Instagram India |
+| `/understand-trending` | Why something is trending — emotion, lifecycle, brand angle |
+| `/research-topic` | Deep topic brief before writing any campaign content |
 
-Claude handles everything else — generating Hinglish captions, hashtags, CTAs, and image prompts — using its own intelligence, no extra API calls needed.
+### Campaign Creation
+| Command | What it does |
+|---|---|
+| `/create-campaign` | Hinglish product campaign — caption, researched hashtags, image prompt |
+| `/create-story-post` | Single 5-panel "Woh Har Roz Ki Ladki" comic carousel |
+| `/create-comic-campaign` | Full 3–5 post story series, different archetypes, cohesive palette |
+
+### Orchestration
+| Command | What it does |
+|---|---|
+| `/run-campaign [keyword]` | Full pipeline: insights → competitors → trends → research → draft |
 
 ---
 
-## Example Conversation
+## Standalone Python Agents
 
+Run outside Claude Code — useful for batch generation or automation:
+
+```bash
+# Product campaign agent
+python agent.py "cotton kurta"
+python agent.py "Durga Puja collection"
+
+# Story / comic campaign agent
+python story_agent.py "spring summer — everyday moments"
+python story_agent.py "Durga Puja — women who celebrate quietly" --posts 3
 ```
-You:  Create a festive campaign for my saree brand.
-      Keyword: Navratri collection. My audience is women 25-45, Gujarat and Rajasthan.
 
-Claude: Let me pull your audience insights first...
-        [calls get_instagram_insights]
-        [calls get_facebook_insights]
+---
 
-        Here's your campaign:
+## Visual Design System
 
-        Caption (Hinglish):
-        "Ye Navratri, apni favourite saree mein celebrate karo! ✨
-        Our new Navratri Collection has arrived — vibrant colours,
-        premium silk, perfect for every garba night.
-        Limited pieces — order karo aaj hi! 🙏🏽"
+All image generation is governed by `art_style.md` — read before any design task.
 
-        Hashtags: #NavratriCollection #SareeLove #EthnicWear
-                  #NavratriSpecial #GarbaLook #IndianFashion
+**Primary style:** *Desi Glow* — warm watercolour caricature, Amul-inspired bold outlines,
+expressive faces, real Indian women (diverse body types, skin tones, ages 20–45).
 
-        CTA: "Shop now — link in bio!"
+**4 approved colour palettes** — one locked per carousel, never mixed:
 
-        Image prompt: "Woman in bright red-orange silk saree dancing garba,
-        warm festive lighting, traditional jewellery, joyful expression"
+| Palette | Use for | Primary colour |
+|---|---|---|
+| Coral Dawn | Spring / summer / new arrivals | `#E8603C` coral |
+| Teal Heritage | Handcraft / artisan stories | `#2EC4B6` turquoise |
+| Bengali Gold | Durga Puja / festive | `#E9C46A` marigold |
+| Monsoon Soft | Everyday / emotional storytelling | `#386641` forest green |
 
-        Should I post this to Instagram and Facebook, or do you want to edit first?
+**4 story character archetypes** (defined in `art_style.md`):
+- The Young Mother — messy bun, toddler at her feet, warm smile
+- The Working Woman — dupatta half-tucked, rushing between two worlds
+- The Elder Sister — quiet strength, responsible beyond her years
+- The Woman of the House — the one everyone depends on, always last to eat
 
-You:  Change the CTA to "DM us to order" and post it.
+**Emotional arc** (same in every story post):
+> Reality → she carries so much → barely time for herself → Miraya → she glows
 
-Claude: [calls publish_to_instagram]
-        [calls publish_to_facebook]
-        Done! Posted to both accounts.
-```
+Image prompts from `art_style.md` are ready to paste into **Canva AI, Midjourney, DALL-E 3, or Adobe Firefly**.
 
 ---
 
@@ -91,15 +129,18 @@ Claude: [calls publish_to_instagram]
 
 | Capability | Status |
 |---|---|
-| Post images/videos/carousels to Facebook Page Feed | ✅ |
-| Post images/videos/carousels to Instagram Feed | ✅ |
+| Publish image/video/carousel posts to Facebook Page Feed | ✅ |
+| Publish image/video/carousel posts to Instagram Feed | ✅ |
 | Read audience demographics (age, gender, top cities) | ✅ |
-| Read engagement metrics (likes, comments, reach, impressions) | ✅ |
-| Generate Hinglish captions, hashtags, CTAs | ✅ (Claude does this) |
+| Read engagement metrics (reach, impressions, likes, comments) | ✅ |
+| Generate Hinglish captions, hashtags, CTAs | ✅ Claude does this |
+| Research competitors and trending content | ✅ Via DuckDuckGo search |
+| Generate Canva / Midjourney image prompts | ✅ Via art_style.md |
+| Always output as draft first | ✅ Hard rule — never auto-publishes |
 | Publish Reels or Stories | ❌ Meta API limitation |
-| Real-time demographics | ❌ 48-hour lag (Meta limitation) |
-| Accounts with fewer than 100 followers | ❌ No demographic data |
-| Granular interest/behavioral targeting data | ❌ Removed by Meta post-2018 |
+| Real-time demographic data | ❌ 48-hour lag (Meta limitation) |
+| Accounts under 100 followers | ❌ No demographic data |
+| Granular interest/behavioral targeting | ❌ Removed by Meta post-2018 |
 
 ---
 
@@ -107,8 +148,9 @@ Claude: [calls publish_to_instagram]
 
 ### Prerequisites
 - Python 3.11+
-- Claude Desktop or Claude Code (to use the MCP server)
-- A Meta Developer account + Facebook App (see below)
+- Claude Desktop or Claude Code
+- A Meta Developer App (one-time setup — see below)
+- Anthropic API key (for standalone agents)
 
 ### 1. Clone and install
 
@@ -116,19 +158,16 @@ Claude: [calls publish_to_instagram]
 git clone https://github.com/prachikaag/mcp_social_posts.git
 cd mcp_social_posts
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+source venv/bin/activate      # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
 ### 2. Set up Meta Developer App (one-time)
 
-You need a Meta App to call the Graph API. Follow these steps:
-
-1. Go to [developers.facebook.com](https://developers.facebook.com) and register
-2. Click **My Apps → Create App → Business**
-3. Add products: **Facebook Login** + **Instagram Graph API**
-4. Under **Facebook Login → Settings**, add redirect URI: `http://localhost:8888/callback`
-5. Note your **App ID** and **App Secret** from **App Settings → Basic**
+1. Go to [developers.facebook.com](https://developers.facebook.com) → **My Apps → Create App → Business**
+2. Add products: **Facebook Login** + **Instagram Graph API**
+3. Under **Facebook Login → Settings**, add redirect URI: `http://localhost:8888/callback`
+4. Note your **App ID** and **App Secret** from **App Settings → Basic**
 
 Required OAuth permissions:
 ```
@@ -141,17 +180,13 @@ pages_show_list
 
 ### 3. Get your access token (one-time)
 
-Run the included helper script — it opens a browser, walks you through Meta OAuth, and saves a long-lived token to your `.env` file:
-
 ```bash
 python auth_setup.py
 ```
 
-This only needs to be done once. The token lasts ~60 days and can be refreshed.
+Opens a browser, walks you through Meta OAuth, and saves a long-lived token (~60 days) to `.env` automatically.
 
 ### 4. Configure environment
-
-Copy `.env.example` to `.env` and fill in your values:
 
 ```bash
 cp .env.example .env
@@ -160,17 +195,20 @@ cp .env.example .env
 ```env
 META_APP_ID=your_app_id
 META_APP_SECRET=your_app_secret
-META_ACCESS_TOKEN=your_long_lived_token   # filled by auth_setup.py
+META_ACCESS_TOKEN=your_long_lived_token   # auto-filled by auth_setup.py
+ANTHROPIC_API_KEY=your_anthropic_api_key  # needed for standalone agents
 ```
+
+After setup, add your Facebook Page ID and Instagram User ID to `CLAUDE.md` (Connected Meta Accounts section).
 
 ### 5. Register with Claude Desktop
 
-Add the server to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on Mac):
+**Mac** — edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
-    "hinglishreach": {
+    "miraya": {
       "command": "python",
       "args": ["/absolute/path/to/mcp_social_posts/server.py"],
       "env": {
@@ -183,18 +221,20 @@ Add the server to your Claude Desktop config (`~/Library/Application Support/Cla
 }
 ```
 
-Or if using Claude Code, run:
+**Claude Code:**
 
 ```bash
-claude mcp add hinglishreach python /absolute/path/to/mcp_social_posts/server.py
+claude mcp add miraya python /absolute/path/to/mcp_social_posts/server.py
 ```
 
-### 6. Start using it
+### 6. Fill in your brand details
 
-Open Claude Desktop or Claude Code and start talking:
+Open `CLAUDE.md` and complete:
+- Products & Pricing Guide (add price ranges)
+- Connected Meta Accounts (Page ID + IG User ID from `auth_setup.py`)
+- Inspiration Brands (3–5 handles of brands whose style you admire)
 
-> *"What does my Instagram audience look like this week?"*
-> *"Create a Hinglish Diwali campaign for my skincare brand and post it."*
+Open `art_style.md` if you want to adjust character archetypes or colour palettes.
 
 ---
 
@@ -202,26 +242,62 @@ Open Claude Desktop or Claude Code and start talking:
 
 ```
 mcp_social_posts/
-├── server.py          # MCP server — defines all tools Claude can call
-├── meta_client.py     # Meta Graph API wrapper (insights + publishing)
-├── auth_setup.py      # One-time OAuth helper to get your access token
-├── requirements.txt
-├── .env.example
-└── README.md
+│
+├── CLAUDE.md                     # Brand context — read by every agent and skill
+├── art_style.md                  # Visual style guide — read before any image task
+│
+├── server.py                     # MCP server (Meta API + web search tools)
+├── meta_client.py                # Meta Graph API v22.0 wrapper
+├── web_search.py                 # DuckDuckGo search wrapper (no API key needed)
+├── auth_setup.py                 # One-time OAuth helper → saves token to .env
+│
+├── agent.py                      # Standalone product campaign agent (Anthropic SDK)
+├── story_agent.py                # Standalone story/comic campaign agent
+│
+├── requirements.txt              # mcp, httpx, anthropic, duckduckgo-search, python-dotenv
+├── .env.example                  # Environment variable template
+│
+└── .claude/
+    └── commands/                 # Slash command skills
+        ├── run-campaign.md           # /run-campaign — full automated pipeline
+        ├── create-campaign.md        # /create-campaign — product campaign draft
+        ├── create-story-post.md      # /create-story-post — single comic story post
+        ├── create-comic-campaign.md  # /create-comic-campaign — full story series
+        ├── fetch-audience-insights.md
+        ├── fetch-competitor-insights.md
+        ├── fetch-trending-posts.md
+        ├── understand-trending.md
+        └── research-topic.md
 ```
+
+---
+
+## Campaign Rules (Always Applied)
+
+These are enforced by every skill, agent, and the MCP server:
+
+1. **Always DRAFT first.** Never publishes without `"post it"` / `"publish"` / `"go ahead"` from you.
+2. **Always Hinglish.** Natural Hindi-English mix — not translated, genuinely spoken.
+3. **Always research hashtags.** Web search before every post. No guessing.
+4. **CTAs = DM or store visit only.** Miraya has no website. Never use "shop now" with a link.
+5. **Always include an image prompt.** Product posts use `art_style.md` palette. Story posts use the base caricature prompt.
+6. **Never invent prices.** Only prices from `CLAUDE.md` Products & Pricing Guide.
+7. **One palette per carousel.** Enforced by `art_style.md` cohesion rules.
 
 ---
 
 ## Roadmap
 
-| Version | Milestone |
-|---|---|
-| v0.1 | README + project structure |
-| v0.2 | Meta OAuth token helper (`auth_setup.py`) |
-| v0.3 | Meta Graph API client (insights + publishing) |
-| v0.4 | MCP server with all tools |
-| v0.5 | Hinglish campaign prompts + Claude integration |
-| v1.0 | Multi-account support + campaign history |
+| Version | Milestone | Status |
+|---|---|---|
+| v0.1 | Project structure + README | ✅ Done |
+| v0.2 | Meta OAuth token helper | ✅ Done |
+| v0.3 | Meta Graph API client | ✅ Done |
+| v0.4 | MCP server with Meta + web search tools | ✅ Done |
+| v0.5 | Product campaign agent + 9 skills | ✅ Done |
+| v0.6 | Story/comic campaign system + art_style.md | ✅ Done |
+| v1.0 | Campaign scheduler + post history | Planned |
+| v1.1 | Multi-account support | Planned |
 
 ---
 

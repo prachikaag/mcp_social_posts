@@ -4,6 +4,8 @@ This file is the single source of truth for all campaign generation, research,
 and social media tasks. Every skill and agent reads from here automatically.
 Do not ask the user for information that is already defined in this file.
 
+**Also read before any visual or design task:** `art_style.md`
+
 ---
 
 ## Brand Identity
@@ -140,6 +142,25 @@ The `/fetch-competitor-insights` skill reads this list automatically.
 
 ---
 
+## Visual Direction
+
+**For all image generation and carousel design tasks, read `art_style.md` first.**
+
+Key visual rules (full detail in `art_style.md`):
+- **Story posts:** Warm caricature illustration — Desi Glow style (Amul-inspired, watercolour wash)
+- **Carousel cohesion:** ONE colour palette per carousel. Never mix palettes across slides.
+- **Characters:** Real Indian women, diverse body types and skin tones, 4 archetypes defined in `art_style.md`
+- **Emotional arc:** Reality → she carries so much → barely time for herself → Miraya → she glows
+- **Image prompts:** Always use the base prompt from `art_style.md` before adding scene detail
+
+**Approved colour palettes** (hex codes in `art_style.md`):
+- Palette 1: Coral Dawn — spring/summer/new arrivals
+- Palette 2: Teal Heritage — handcraft/artisan stories
+- Palette 3: Bengali Gold — Durga Puja/festive
+- Palette 4: Monsoon Soft — everyday/emotional storytelling
+
+---
+
 ## Campaign Rules (Always Follow — No Exceptions)
 
 1. **Always output as DRAFT.** Never call `publish_to_facebook` or `publish_to_instagram`
@@ -154,6 +175,8 @@ The `/fetch-competitor-insights` skill reads this list automatically.
    Never use "shop now" with a link. Never mention online delivery.
 
 5. **Always include an image/creative prompt** with every campaign draft.
+   For story/comic posts: follow `art_style.md` base prompt. For product posts: describe
+   subject, mood, colour palette, background, lighting, text overlay.
 
 6. **Read audience insights** if available in the session before generating campaigns.
 
@@ -162,6 +185,53 @@ The `/fetch-competitor-insights` skill reads this list automatically.
 8. **Location matters.** Siliguri is in North Bengal — reference local festivals
    (Durga Puja, Eid, Diwali, Teej, Bengali New Year / Poila Boishakh) and
    local culture where relevant.
+
+9. **Carousel cohesion.** Every slide in a carousel must share the same colour palette,
+   character design, typography, and illustration style. Read `art_style.md` before
+   generating any multi-slide content.
+
+---
+
+## Available Skills (Slash Commands)
+
+Invoke these in Claude Code or Claude Desktop by typing the command:
+
+### Research Skills
+| Command | What it does |
+|---|---|
+| `/fetch-audience-insights` | Pulls live Instagram + Facebook audience demographics and engagement |
+| `/fetch-competitor-insights` | Researches @alamode_slg and @trendxmastani — content gaps and opportunities |
+| `/fetch-trending-posts [keyword]` | Finds trending content for a keyword on Instagram India |
+| `/understand-trending` | Analyses *why* something is trending — emotion, lifecycle, brand angle |
+| `/research-topic` | Deep topic research brief before writing campaign content |
+
+### Campaign Creation Skills
+| Command | What it does |
+|---|---|
+| `/create-campaign` | Standard product campaign — Hinglish caption + researched hashtags + image prompt |
+| `/create-story-post` | Single "Woh Har Roz Ki Ladki" comic post — 5-panel emotional story arc |
+| `/create-comic-campaign` | Full 3–5 post story series with different character archetypes |
+
+### Orchestration
+| Command | What it does |
+|---|---|
+| `/run-campaign [keyword]` | Full automated pipeline: insights → competitors → trends → research → draft |
+
+---
+
+## Standalone Agents (Python CLI)
+
+For running outside Claude Code:
+
+```bash
+# Full campaign agent (keyword → Hinglish campaign draft)
+python agent.py "cotton kurta"
+python agent.py "Durga Puja collection"
+
+# Story / comic campaign agent (everyday woman storytelling)
+python story_agent.py "spring summer — everyday moments"
+python story_agent.py "Durga Puja — women who celebrate quietly" --posts 3
+```
 
 ---
 
